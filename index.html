@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" class="html">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dynamic Font Size with REM</title>
+    <!-- <link rel="stylesheet" href="styles.css" /> -->
+
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      /* 设置默认字体大小 */
+      html {
+        font-size: 16px; /* 默认大小 */
+        height: 100%;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        height: 100%;
+      }
+
+      .container {
+        /* max-width: 800px; */
+        /* margin: 0 auto; */
+
+        height: 100%;
+        width: 100%;
+      }
+      .bg {
+        background: url(./images/bg1.jpg);
+        height: 100%;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+      }
+      .go {
+        position: absolute;
+        top: 55%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1rem;
+        color: white;
+        text-align: center;
+        cursor: pointer;
+        background-color: rgb(196, 196, 196);
+        padding: 10px 20px;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- <img src="./images/bg1.jpg" alt="" style="height: 100%" /> -->
+      <div class="bg">
+        <div class="go">进入Kpop世界</div>
+      </div>
+    </div>
+
+    <!-- <script src="script.js"></script> -->
+    <script>
+      function setFontSize() {
+        const element = document.querySelector(".html");
+        const viewportWidth = window.innerWidth;
+
+        // 计算字体大小，这里假设最大字体大小为18px，最小为14px
+        const minFontSize = 14;
+        const maxFontSize = 18;
+        const designWidth = 370;
+
+        let fontSize =
+          (viewportWidth / designWidth) * (maxFontSize - minFontSize) +
+          minFontSize;
+
+        // 设置字体大小
+        element.style.fontSize = `${fontSize}px`;
+      }
+
+      // 初始化字体大小
+      setFontSize();
+
+      // 监听窗口大小变化
+      window.addEventListener("resize", setFontSize);
+      const go = document.querySelector(".go");
+      go.addEventListener("click", () => {
+        window.location.href = "./top.html";
+      });
+    </script>
+  </body>
+</html>

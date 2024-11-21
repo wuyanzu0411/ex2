@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" class="html">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dynamic Font Size with REM</title>
+    <!-- <link rel="stylesheet" href="styles.css" /> -->
+
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      /* 设置默认字体大小 */
+      html {
+        font-size: 16px; /* 默认大小 */
+        height: 100%;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        height: 100vh; /* 让背景图覆盖整个视口高度 */
+      }
+
+      .container {
+        height: 100vh; /* 让背景图覆盖整个视口高度 */
+        width: 100%;
+        overflow-y: auto; /* 添加竖向滚动条 */
+      }
+      .bg {
+        background: url(./images/bg1.jpg);
+        height: 100%;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+      }
+
+      .go {
+        position: absolute;
+        top: 55%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1rem;
+        color: white;
+        text-align: center;
+        cursor: pointer;
+        background-color: rgb(196, 196, 196);
+        padding: 10px 20px;
+        border-radius: 10px;
+      }
+      .hp {
+        position: absolute;
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        border: 10px solid rgb(104, 84, 76);
+        z-index: 99;
+        right: 10px;
+        top: 126px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+        color: black;
+        font-size: 20px;
+        font-weight: bold;
+      }
+      .ljtp {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 1rem;
+        text-align: center;
+        cursor: pointer;
+        background-color: #fff;
+        width: 165px; /* 椭圆的宽度 */
+        height: 55px; /* 椭圆的高度 */
+        padding-left: 15px;
+        border-radius: 50%; /* 设置为50%，使元素变成椭圆 */
+        border: 10px solid rgb(1, 0, 1);
+        display: flex;
+
+        justify-content: center;
+        align-items: center;
+        color: black;
+        font-size: 26px;
+        font-weight: bold;
+      }
+
+      /* 弹窗背景层 */
+      .modal {
+        display: none; /* 默认隐藏 */
+        position: fixed; /* 固定定位 */
+        z-index: 999; /* 放在所有其他内容之上 */
+        left: 0;
+        top: 0;
+        width: 100%; /* 宽度占满整个屏幕 */
+        height: 100%; /* 高度占满整个屏幕 */
+        overflow: auto; /* 如果内容超出屏幕，则允许滚动 */
+        background-color: rgba(0, 0, 0, 0.4); /* 半透明黑色背景 */
+      }
+
+      /* 弹窗内容 */
+      .modal-content {
+        background-color: rgba(255, 255, 255, 0.6); /* 白色透明背景 */
+        margin: 15% auto; /* 上下居中 */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%; /* 内容宽度 */
+        max-width: 500px; /* 最大宽度限制 */
+        border-radius: 10px;
+      }
+
+      /* 关闭按钮 */
+      .close {
+        color: #151414;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        float: right;
+      }
+      .title {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 10px;
+        width: 100%;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="myModal" class="modal">
+      <!-- 弹窗内容 -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="title">排行榜</div>
+        <p>这是一个弹窗！</p>
+      </div>
+    </div>
+    <div class="container">
+      <div class="bg"></div>
+      <div class="hp" id="openModalBtn">排行</div>
+      <div class="ljtp">立即投票！</div>
+    </div>
+
+    <!-- <script src="script.js"></script> -->
+    <script>
+      function setFontSize() {
+        const element = document.querySelector(".html");
+        const viewportWidth = window.innerWidth;
+
+        // 计算字体大小，这里假设最大字体大小为18px，最小为14px
+        const minFontSize = 14;
+        const maxFontSize = 18;
+        const designWidth = 370;
+
+        let fontSize =
+          (viewportWidth / designWidth) * (maxFontSize - minFontSize) +
+          minFontSize;
+
+        // 设置字体大小
+        element.style.fontSize = `${fontSize}px`;
+      }
+
+      // 初始化字体大小
+      setFontSize();
+
+      // 监听窗口大小变化
+      window.addEventListener("resize", setFontSize);
+      // 获取模态框
+      var modal = document.getElementById("myModal");
+
+      // 获取触发模态框的按钮
+      var btn = document.getElementById("openModalBtn");
+
+      // 获取关闭按钮
+      var span = document.getElementsByClassName("close")[0];
+
+      // 当点击按钮时，打开模态框
+      btn.onclick = function () {
+        modal.style.display = "block";
+      };
+
+      // 当点击关闭按钮时，关闭模态框
+      span.onclick = function () {
+        modal.style.display = "none";
+      };
+
+      // 当用户点击模态框外部时，关闭模态框
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+    </script>
+  </body>
+</html>
